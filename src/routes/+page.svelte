@@ -1,66 +1,127 @@
 <script>
   // @ts-nocheck
   import Calendar from "@event-calendar/core";
+  import "@event-calendar/core/index.css";
   import DayGrid from "@event-calendar/day-grid";
   import Interaction from "@event-calendar/interaction";
   import List from "@event-calendar/list";
   import TimeGrid from "@event-calendar/time-grid";
+  import { onMount } from "svelte";
 
   // import "../app.css";
 
   /**
    * @type {{ setOption: (arg0: string, arg1: Date) => void; }}
    */
-  let ec;
-  let plugins = [TimeGrid, Interaction, List, DayGrid];
-  let options = {
-    view: "timeGridWeek",
-    locale: "ja",
-    headerToolbar: {
-      start: "prev,next today",
-      center: "title",
-      end: "dayGridMonth,timeGridWeek,timeGridDay,listWeek resourceTimeGridWeek",
-    },
-    editable: true,
-    buttonText: function (texts) {
-      texts.resourceTimeGridWeek = "resources";
-      return texts;
-    },
-    resources: [
-      { id: 1, title: "Resource A" },
-      { id: 2, title: "Resource B" },
-    ],
-    scrollTime: "09:00:00",
-    events: createEvents(),
-    views: {
-      timeGridWeek: { pointer: true },
-      resourceTimeGridWeek: { pointer: true },
-    },
-    dayMaxEvents: true,
-    nowIndicator: true,
-    // selectable: true,
-    dateClick: function (/** @type {{ view: any; }} */ info) {
-      console.log("aaa");
-      console.log(info.dayEl.innerHTML);
-      console.log("bbb");
-      console.log(info.view);
-
-      if (info.view.type == "timeGridWeek" || info.view.type == "timeGridDay") {
-        const days = getDays();
-        console.log("days", days);
-        ec.addEvent([
-          {
-            start: days[0] + " 15:00",
-            end: days[0] + " 16:00",
-            resourceId: 1,
-            title: "test",
-            // display: "background",
+  onMount(() => {
+    let ec = new Calendar({
+      target: document.getElementById("ec"),
+      props: {
+        plugins: [TimeGrid, Interaction, List, DayGrid],
+        options: {
+          view: "timeGridWeek",
+          locale: "ja",
+          headerToolbar: {
+            start: "prev,next today",
+            center: "title",
+            end: "dayGridMonth,timeGridWeek,timeGridDay,listWeek resourceTimeGridWeek",
           },
-        ]);
-      }
-      changeview(info.view.type);
-    },
-  };
+          editable: true,
+          buttonText: function (texts) {
+            texts.resourceTimeGridWeek = "resources";
+            return texts;
+          },
+          resources: [
+            { id: 1, title: "Resource A" },
+            { id: 2, title: "Resource B" },
+          ],
+          scrollTime: "09:00:00",
+          events: createEvents(),
+          views: {
+            timeGridWeek: { pointer: true },
+            resourceTimeGridWeek: { pointer: true },
+          },
+          dayMaxEvents: true,
+          nowIndicator: true,
+          // selectable: true,
+          dateClick: function (/** @type {{ view: any; }} */ info) {
+            console.log("aaa");
+            console.log(info.dayEl.innerHTML);
+            console.log("bbb");
+            console.log(info.view);
+
+            if (
+              info.view.type == "timeGridWeek" ||
+              info.view.type == "timeGridDay"
+            ) {
+              const days = getDays();
+              console.log("days", days);
+              ec.addEvent([
+                {
+                  start: days[0] + " 15:00",
+                  end: days[0] + " 16:00",
+                  resourceId: 1,
+                  title: "test",
+                  // display: "background",
+                },
+              ]);
+            }
+            changeview(info.view.type);
+          },
+        },
+      },
+    });
+  });
+
+  // let plugins = [TimeGrid, Interaction, List, DayGrid];
+  // let options = {
+  //   view: "timeGridWeek",
+  //   locale: "ja",
+  //   headerToolbar: {
+  //     start: "prev,next today",
+  //     center: "title",
+  //     end: "dayGridMonth,timeGridWeek,timeGridDay,listWeek resourceTimeGridWeek",
+  //   },
+  //   editable: true,
+  //   buttonText: function (texts) {
+  //     texts.resourceTimeGridWeek = "resources";
+  //     return texts;
+  //   },
+  //   resources: [
+  //     { id: 1, title: "Resource A" },
+  //     { id: 2, title: "Resource B" },
+  //   ],
+  //   scrollTime: "09:00:00",
+  //   events: createEvents(),
+  //   views: {
+  //     timeGridWeek: { pointer: true },
+  //     resourceTimeGridWeek: { pointer: true },
+  //   },
+  //   dayMaxEvents: true,
+  //   nowIndicator: true,
+  //   // selectable: true,
+  //   dateClick: function (/** @type {{ view: any; }} */ info) {
+  //     console.log("aaa");
+  //     console.log(info.dayEl.innerHTML);
+  //     console.log("bbb");
+  //     console.log(info.view);
+
+  //     if (info.view.type == "timeGridWeek" || info.view.type == "timeGridDay") {
+  //       const days = getDays();
+  //       console.log("days", days);
+  //       ec.addEvent([
+  //         {
+  //           start: days[0] + " 15:00",
+  //           end: days[0] + " 16:00",
+  //           resourceId: 1,
+  //           title: "test",
+  //           // display: "background",
+  //         },
+  //       ]);
+  //     }
+  //     changeview(info.view.type);
+  //   },
+  // };
 
   function changeview(currentview) {
     if (currentview == "dayGridMonth") {
@@ -192,4 +253,6 @@
   }
 </script>
 
-<Calendar bind:this={ec} {plugins} {options} />
+<!-- <Calendar bind:this={ec} {plugins} {options} /> -->
+
+<div id="ec"></div>
