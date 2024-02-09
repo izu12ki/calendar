@@ -43,6 +43,17 @@
           },
           dayMaxEvents: true,
           nowIndicator: true,
+          slotMinTime: "09:00:00",
+          slotMaxTime: "22:00:00",
+          // datesSet: function (/** @type {{ view: any; }} */ info) {
+          //   console.log("info", info);
+          //   info.view.activeStart = "2024-02-04  09:00";
+          // },
+          // viewDidMount: function (/** @type {{ view: any; }} */ info) {
+          //   console.log(info);
+          //   // ec.setOption("view", "timeGridWeek");
+          //   info.view.activeStart = "2024-02-04  09:00";
+          // },
           // selectable: true,
           dateClick: function (/** @type {{ view: any; }} */ info) {
             console.log(info.view);
