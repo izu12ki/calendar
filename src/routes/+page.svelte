@@ -45,9 +45,6 @@
           nowIndicator: true,
           // selectable: true,
           dateClick: function (/** @type {{ view: any; }} */ info) {
-            console.log("aaa");
-            console.log(info.dayEl.innerHTML);
-            console.log("bbb");
             console.log(info.view);
 
             if (
@@ -66,7 +63,10 @@
                 },
               ]);
             }
-            changeview(info.view.type);
+
+            if (info.view.type == "dayGridMonth") {
+              ec.setOption("view", "timeGridWeek");
+            }
           },
         },
       },
