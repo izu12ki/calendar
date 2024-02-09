@@ -182,7 +182,7 @@
       },
       {
         start: days[1] + " 16:00",
-        end: days[2] + " 08:00",
+        end: days[2] + " 10:00",
         resourceId: 2,
         title: "日をまたぐイベントも可能",
         color: "#B29DD9",
